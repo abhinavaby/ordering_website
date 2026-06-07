@@ -1,0 +1,42 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate env.js from secrets
+        run: |
+          cat > env.js << 'EOF'
+          // Local environment values for EmailJS credentials
+          // This file is generated during deployment from GitHub Secrets
+          window.EMAILJS_PUBLIC_KEY = '${{ secrets.EMAILJS_PUBLIC_KEY }}';
+          window.EMAILJS_SERVICE_ID = '${{ secrets.EMAILJS_SERVICE_ID }}';
+          window.EMAILJS_TEMPLATE_ID = '${{ secrets.EMAILJS_TEMPLATE_ID }}';
+          EOF
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
