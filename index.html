@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FeastHub – Premium Food Ordering</title>
+  <meta name="description"
+    content="Order premium restaurant-quality meals delivered to your door. Browse our curated menu of 10 delicious items." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ===== SPLASH SCREEN ===== -->
+  <div id="splash-screen" class="splash">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <span class="logo-icon">🍽️</span>
+        <h1 class="logo-text">FeastHub</h1>
+      </div>
+      <p class="splash-tagline">Crafted with Passion, Delivered with Care</p>
+      <div class="splash-loader">
+        <div class="loader-bar"></div>
+      </div>
+    </div>
+    <div class="splash-bg-circle c1"></div>
+    <div class="splash-bg-circle c2"></div>
+    <div class="splash-bg-circle c3"></div>
+  </div>
+
+  <!-- ===== USER INFO MODAL ===== -->
+  <div id="user-modal" class="modal-overlay hidden">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <span class="modal-emoji">👋</span>
+        <h2 id="modal-title">Welcome to FeastHub!</h2>
+        <p>Tell us a little about yourself to get started.</p>
+      </div>
+      <form id="user-form" novalidate>
+        <div class="form-group">
+          <label for="user-name">Your Name</label>
+          <input type="text" id="user-name" name="user_name" placeholder="e.g. John Doe" required autocomplete="name" />
+          <span class="field-error" id="name-error">Please enter your name.</span>
+        </div>
+        <div class="form-group">
+          <label for="user-email">Email Address</label>
+          <input type="email" id="user-email" name="user_email" placeholder="e.g. john@email.com" required
+            autocomplete="email" />
+          <span class="field-error" id="email-error">Please enter a valid email.</span>
+        </div>
+        <button type="submit" id="modal-submit-btn" class="btn-primary">
+          <span id="btn-text">Let's Eat! 🚀</span>
+          <span id="btn-spinner" class="btn-spinner hidden"></span>
+        </button>
+        <p id="form-status" class="form-status hidden"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== CART SIDEBAR ===== -->
+  <div id="cart-overlay" class="cart-overlay hidden" aria-hidden="true"></div>
+  <aside id="cart-sidebar" class="cart-sidebar" role="complementary" aria-label="Shopping cart">
+    <div class="cart-header">
+      <div class="cart-header-title">
+        <span class="cart-icon-header">🛒</span>
+        <h2>Your Order</h2>
+      </div>
+      <button id="cart-close-btn" class="cart-close-btn" aria-label="Close cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Cart Items -->
+    <div id="cart-items-list" class="cart-items-list"></div>
+
+    <!-- Empty State -->
+    <div id="cart-empty" class="cart-empty hidden">
+      <span class="cart-empty-icon">🍽️</span>
+      <p>Your cart is empty</p>
+      <span>Add some delicious items from the menu!</span>
+    </div>
+
+    <!-- Cart Footer -->
+    <div id="cart-footer" class="cart-footer hidden">
+      <div class="cart-summary">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">$0.00</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Delivery Fee</span>
+          <span id="cart-delivery">$2.99</span>
+        </div>
+        <div class="cart-summary-row cart-total-row">
+          <span>Total</span>
+          <span id="cart-total">$0.00</span>
+        </div>
+      </div>
+      <button id="checkout-btn" class="btn-primary btn-checkout">
+        <span id="checkout-btn-text">Place Order via Email 📧</span>
+        <span id="checkout-spinner" class="btn-spinner hidden"></span>
+      </button>
+      <p id="checkout-status" class="form-status hidden"></p>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN APP ===== -->
+  <div id="main-app" class="hidden">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <span class="logo-icon">🍽️</span>
+        <span class="nav-logo-text">FeastHub</span>
+      </div>
+      <div class="navbar-right">
+        <!-- Cart Button -->
+        <button id="cart-toggle-btn" class="cart-toggle-btn" aria-label="Open cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <span id="cart-badge" class="cart-badge hidden">0</span>
+        </button>
+        <div class="nav-user">
+          <span class="user-avatar" id="user-avatar-letter">U</span>
+          <span id="nav-user-name">Guest</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO BANNER -->
+    <section class="hero">
+      <div class="hero-content">
+        <h2 class="hero-title">Today's <span class="highlight">Menu</span></h2>
+        <p class="hero-subtitle">Freshly crafted dishes, ready to order — tap any item to explore or add directly.</p>
+      </div>
+    </section>
+
+    <!-- PRODUCTS GRID -->
+    <main class="products-section" id="products-section">
+      <div class="products-grid" id="products-grid">
+        <!-- Populated by JS (skeleton + real cards) -->
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>© 2025 FeastHub. All rights reserved. Made with ❤️</p>
+    </footer>
+
+  </div>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="env.js"></script>
+  <script src="cart.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
